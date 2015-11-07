@@ -1,5 +1,13 @@
 language: python
 
+# Setting sudo to false opts in to Travis-CI container-based builds.
+sudo: false
+
+addons:
+    apt:
+        packages:
+            - msttcorefonts
+
 env:
   - PYTHON=2.7 DEPS=modern
   - PYTHON=2.7 DEPS=minimal
@@ -25,9 +33,7 @@ install:
   - cp testing/matplotlibrc .
 
 before_install:
-  - sudo apt-get update -yq
-  - sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
-  - sudo apt-get install msttcorefonts -qq
+  - sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
 
   # http://conda.pydata.org/docs/travis.html#the-travis-yml-file
   - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
